@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Owl Focus App</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle, #0e010ff1, #160129);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .status-text {
+      text-align: center;
+      font-size: 4vw;
+      font-weight: bold;
+      margin-top: 40px;
+      background: linear-gradient(90deg, #ff6ec4, #7873f5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 10px #2e0c1daf, 0 0 10px #1b0711ce, 0 0 30px #ff80c0b6;
+      transition: all 0.6s ease;
+    }
+
+    .image-container {
+      position: relative;
+      width: 80%;
+      max-width: 400px;
+      aspect-ratio: 1 / 1;
+      perspective: 2000px;
+      cursor: pointer;
+    }
+
+    .owl-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      transition: 
+        opacity 1s ease-in-out,
+        transform 1s ease-in-out;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+      border-radius: 50%;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+    }
+
+    .visible {
+      opacity: 1;
+      z-index: 2;
+      transform: rotateY(0deg) scale(1.03);
+    }
+
+    .hidden {
+      opacity: 0;
+      z-index: 1;
+      transform: rotateY(180deg) scale(0.97);
+    }
+
+    @media (max-width: 600px) {
+      .status-text {
+        font-size: 4vw;
+        margin-top: 30px;
+      }
+
+      .image-container {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="image-container" onclick="switchImage()">
+    <img id="owlImage1" src="pictures/focus-img2.jpg" class="owl-image visible" />
+    <img id="owlImage2" src="pictures/focus-img1.jpg" class="owl-image hidden" />
+  </div>
+
+  <div class="status-text" id="statusText">You are Distracted Now!</div>
+
+  <script>
+    let showingFirst = true;
+
+    function switchImage() {
+      const img1 = document.getElementById("owlImage1");
+      const img2 = document.getElementById("owlImage2");
+      const statusText = document.getElementById("statusText");
+
+      statusText.style.opacity = 0;
+
+      setTimeout(() => {
+        if (showingFirst) {
+          img1.classList.remove("visible");
+          img1.classList.add("hidden");
+          img2.classList.remove("hidden");
+          img2.classList.add("visible");
+          statusText.textContent = "You are Focused Now!";
+        } else {
+          img1.classList.remove("hidden");
+          img1.classList.add("visible");
+          img2.classList.remove("visible");
+          img2.classList.add("hidden");
+          statusText.textContent = "You are Distracted Now!";
+        }
+
+        statusText.style.opacity = 1;
+
+        showingFirst = !showingFirst;
+      }, 300);
+    }
+  </script>
+</body>
+</html>
